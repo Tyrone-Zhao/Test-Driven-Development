@@ -1,5 +1,7 @@
+from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 import unittest
+import time
 
 
 class NewVisitorTest(unittest.TestCase):
@@ -15,20 +17,35 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.get("http://localhost:8000")
 
         # 小明注意到网页的标题和头部都包含"To-Do"这个词
-        assert "To-Do" in self.browser.title,\
+        assert "待办事项" in self.browser.title,\
             "Browser title was " + self.browser.title
 
         # 应用邀请他输入一个待办事项
+        inputbox = self.browser.find_elements_by_id("id_new_item")
+        self.assertEqual(
+            inputbox.get_attribute("placeholder"),
+            "输入一个待办事项"
+        )
 
         # 他在一个文本框中输入了"购买孔雀羽毛"
         # 它的爱好是购买稀有的东西收藏起来
+        inputbox.send_keys("购买孔雀羽毛")
 
         # 他按回车键后，页面更新了
         # 待办事项表格中显示了"1: 购买孔雀羽毛"
+        inputbox.send_keys(Keys.ENTER)
+        time.sleep(1)
+
+        table = self.browser.find_element_by_id("id_list_table")
+        rows = table.find_elements_by_tag_name("tr")
+        self.assertTrue(
+            any(row.text == "1: 购买孔雀羽毛" for row in rows)
+        )
 
         # 页面中又显示了一个文本框，可以输入其他的待办事项
         # 他输入了“把孔雀羽毛收藏到家里”
         # 他做事很有条理
+        self.fail("Finish the test!")
 
         # 页面再次更新，他的清单中显示了这两个待办事项
 
