@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>待办事项列表</title>
+</head>
+<body>
+    <h1>你的待办事项列表</h1>
+    <form method="POST">
+        <input id="id_new_item" placeholder="输入一个待办事项" name="item_text">
+        {% csrf_token %}
+    </form>
+    
+    <table id="id_list_table">
+        <tr><td>1: {{ new_item_text }}</td></tr>
+    </table>
+</body>
+</html>
