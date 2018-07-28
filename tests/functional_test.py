@@ -23,23 +23,24 @@ class NewVisitorTest(unittest.TestCase):
         # 应用邀请他输入一个待办事项
         inputbox = self.browser.find_elements_by_id("id_new_item")
         self.assertEqual(
-            inputbox.get_attribute("placeholder"),
+            inputbox[0].get_attribute("placeholder"),
             "输入一个待办事项"
         )
 
         # 他在一个文本框中输入了"购买孔雀羽毛"
         # 它的爱好是购买稀有的东西收藏起来
-        inputbox.send_keys("购买孔雀羽毛")
+        inputbox[0].send_keys("购买孔雀羽毛")
 
         # 他按回车键后，页面更新了
         # 待办事项表格中显示了"1: 购买孔雀羽毛"
-        inputbox.send_keys(Keys.ENTER)
+        inputbox[0].send_keys(Keys.ENTER)
         time.sleep(1)
 
         table = self.browser.find_element_by_id("id_list_table")
         rows = table.find_elements_by_tag_name("tr")
         self.assertTrue(
-            any(row.text == "1: 购买孔雀羽毛" for row in rows)
+            any(row.text == "1: 购买孔雀羽毛" for row in rows),
+            "新的待办事项没有出现在表格中"
         )
 
         # 页面中又显示了一个文本框，可以输入其他的待办事项
