@@ -10,10 +10,33 @@ class HomePageTest(TestCase):
         self.assertTemplateUsed(response, "home.html")
 
     def test_can_save_a_POST_request(self):
-        ''' 判断home页可以正确的接收一个待办事项的POST请求 '''
+        ''' 判断home页可以正确的传递一个待办事项的POST请求 '''
         response = self.client.post("/", data={"item_text": "一个新的待办事项"})
-        self.assertIn("一个新的待办事项", response.content.decode())
-        self.assertTemplateUsed(response, "home.html")
+
+        self.assertEqual(Item.objects.count(), 1)
+        new_item = Item.objects.first()
+        self.assertEqual(new_item.text, "一个新的待办事项")
+
+    def test_redirects_after_POST(self):
+        ''' 判断处理完POST请求后可以正确的重定向 '''
+        response = self.client.post("/", data={"item_text": "一个新的待办事项"})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response["location"], "/")
+
+    def test_only_saves_items_when_necessary(self):
+        ''' 判断请求只保存需要的待办事项 '''
+        self.client.get("/")
+        self.assertEqual(Item.objects.count(), 0)
+
+    def test_display_all_list_items(self):
+        ''' 测试页面table可以显示多个待办事项 '''
+        Item.objects.create(text="事项1")
+        Item.objects.create(text="事项2")
+
+        response = self.client.get("/")
+
+        self.assertIn("事项1", response.content.decode())
+        self.assertIn("事项2", response.content.decode())
 
 
 class ItemModelTest(TestCase):

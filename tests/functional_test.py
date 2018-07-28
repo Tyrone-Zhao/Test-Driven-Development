@@ -10,6 +10,7 @@ class NewVisitorTest(unittest.TestCase):
         self.browser = webdriver.Chrome()
 
     def tearDown(self):
+        time.sleep(10)
         self.browser.quit()
 
     def check_for_row_in_list_table(self, row_text):
