@@ -40,19 +40,30 @@ class NewVisitorTest(unittest.TestCase):
         rows = table.find_elements_by_tag_name("tr")
         self.assertTrue(
             any(row.text == "1: 购买孔雀羽毛" for row in rows),
-            "新的待办事项没有出现在表格中"
+            f"新的待办事项没有出现在表格中, 内容为\n{ table.text }"
         )
 
         # 页面中又显示了一个文本框，可以输入其他的待办事项
         # 他输入了“把孔雀羽毛收藏到家里”
         # 他做事很有条理
-        self.fail("Finish the test!")
+        inputbox[0] = self.browser.find_element_by_id("id_new_item")
+        inputbox[0].send_keys("把孔雀羽毛收藏到家里")
+        inputbox[0].send_keys(Keys.ENTER)
+        time.sleep(1)
 
         # 页面再次更新，他的清单中显示了这两个待办事项
+        table = self.browser.find_element_by_id("id_list_table")
+        rows = table.find_elements_by_tag_name("tr")
+        self.assertIn("1: 购买孔雀羽毛", [row.text for row in rows])
+        self.assertIn(
+            "2: 把孔雀羽毛收藏到家里",
+            [row.text for row in rows]
+        )
 
         # 小明想知道这个网站会否记住他的清单
         # 他看到网站为他生成了一个唯一的URL
         # 而且页面中有一些文字解说这个功能
+        self.fail("Finish the test")
 
         # 他访问那个URL，发现他的待办事项列表还在
 
