@@ -12,6 +12,12 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def check_for_row_in_list_table(self, row_text):
+        ''' 辅助方法 '''
+        table = self.browser.find_element_by_id("id_list_table")
+        rows = table.find_elements_by_tag_name("tr")
+        self.assertIn(row_text, [row.text for row in rows])
+
     def test_can_start_a_list_and_retrieve_it_later(self):
         # 小明听说有一个很酷的待办事项在线应用，于是去看了应用首页
         self.browser.get("http://localhost:8000")
@@ -36,12 +42,7 @@ class NewVisitorTest(unittest.TestCase):
         inputbox[0].send_keys(Keys.ENTER)
         time.sleep(1)
 
-        table = self.browser.find_element_by_id("id_list_table")
-        rows = table.find_elements_by_tag_name("tr")
-        self.assertTrue(
-            any(row.text == "1: 购买孔雀羽毛" for row in rows),
-            f"新的待办事项没有出现在表格中, 内容为\n{ table.text }"
-        )
+        self.check_for_row_in_list_table("1: 购买孔雀羽毛")
 
         # 页面中又显示了一个文本框，可以输入其他的待办事项
         # 他输入了“把孔雀羽毛收藏到家里”
@@ -52,13 +53,8 @@ class NewVisitorTest(unittest.TestCase):
         time.sleep(1)
 
         # 页面再次更新，他的清单中显示了这两个待办事项
-        table = self.browser.find_element_by_id("id_list_table")
-        rows = table.find_elements_by_tag_name("tr")
-        self.assertIn("1: 购买孔雀羽毛", [row.text for row in rows])
-        self.assertIn(
-            "2: 把孔雀羽毛收藏到家里",
-            [row.text for row in rows]
-        )
+        self.check_for_row_in_list_table("1: 购买孔雀羽毛")
+        self.check_for_row_in_list_table("2: 把孔雀羽毛收藏到家里")
 
         # 小明想知道这个网站会否记住他的清单
         # 他看到网站为他生成了一个唯一的URL
