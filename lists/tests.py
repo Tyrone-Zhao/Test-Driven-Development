@@ -9,26 +9,6 @@ class HomePageTest(TestCase):
         response = self.client.get("/")
         self.assertTemplateUsed(response, "home.html")
 
-    def test_can_save_a_POST_request(self):
-        ''' 判断home页可以正确的传递一个待办事项的POST请求 '''
-        response = self.client.post("/", data={"item_text": "一个新的待办事项"})
-
-        self.assertEqual(Item.objects.count(), 1)
-        new_item = Item.objects.first()
-        self.assertEqual(new_item.text, "一个新的待办事项")
-
-    def test_redirects_after_POST(self):
-        ''' 判断处理完POST请求后可以正确的重定向 '''
-        response = self.client.post("/", data={"item_text": "一个新的待办事项"})
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response["location"],
-                         "/lists/the-only-list-in-the-world/")
-
-    def test_only_saves_items_when_necessary(self):
-        ''' 判断请求只保存需要的待办事项 '''
-        self.client.get("/")
-        self.assertEqual(Item.objects.count(), 0)
-
 
 class ItemModelTest(TestCase):
 
@@ -66,3 +46,21 @@ class ListViewTest(TestCase):
 
         self.assertContains(response, "事项1")
         self.assertContains(response, "事项2")
+
+
+class NewListTest(TestCase):
+
+    def test_can_save_a_POST_request(self):
+        ''' 判断list_new可以正确的传递一个待办事项的POST请求 '''
+        self.client.post("/lists/new", data={"item_text": "一个新的待办事项"})
+        self.assertEqual(Item.objects.count(), 1)
+        new_item = Item.objects.first()
+        self.assertEqual(new_item.text, "一个新的待办事项")
+
+    def test_redirects_after_POST(self):
+        ''' 判断处理完POST请求后可以正确的重定向 '''
+        response = self.client.post("/lists/new",
+                                    data={"item_text": "一个新的待办事项"})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response["location"],
+                         "/lists/the-only-list-in-the-world/")
