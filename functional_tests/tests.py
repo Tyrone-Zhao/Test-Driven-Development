@@ -1,10 +1,10 @@
 from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
-import unittest
+from django.test import LiveServerTestCase
 import time
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Chrome()
@@ -21,7 +21,7 @@ class NewVisitorTest(unittest.TestCase):
 
     def test_can_start_a_list_and_retrieve_it_later(self):
         # 小明听说有一个很酷的待办事项在线应用，于是去看了应用首页
-        self.browser.get("http://localhost:8000")
+        self.browser.get(self.live_server_url)
 
         # 小明注意到网页的标题和头部都包含"To-Do"这个词
         assert "待办事项" in self.browser.title,\
@@ -65,7 +65,3 @@ class NewVisitorTest(unittest.TestCase):
         # 他访问那个URL，发现他的待办事项列表还在
 
         # 他很满意，去睡觉了
-
-
-if __name__ == "__main__":
-    unittest.main()

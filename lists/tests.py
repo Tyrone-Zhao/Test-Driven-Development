@@ -29,7 +29,10 @@ class HomePageTest(TestCase):
         self.assertEqual(Item.objects.count(), 0)
 
     def test_display_all_list_items(self):
-        ''' 测试页面table可以显示多个待办事项 '''
+        ''' 
+            测试页面table可以显示多个待办事项, 
+            空行表明:设置-使用-断言的单元测试典型结构 
+        '''
         Item.objects.create(text="事项1")
         Item.objects.create(text="事项2")
 
@@ -42,6 +45,7 @@ class HomePageTest(TestCase):
 class ItemModelTest(TestCase):
 
     def test_saving_and_retrieving_items(self):
+        ''' 测试数据库保存和获取待办事项 '''
         first_item = Item()
         first_item.text = "第一个列表项"
         first_item.save()
