@@ -65,6 +65,13 @@ class ListViewTest(TestCase):
         self.assertNotContains(response, "其他待办事项1")
         self.assertNotContains(response, "其他待办事项2")
 
+    def test_passes_correct_list_to_template(self):
+        ''' 测试模版可以接收到正确的待办事项列表 '''
+        other_list = List.objects.create()
+        correct_list = List.objects.create()
+        response = self.client.get(f"/lists/{ correct_list.id }/")
+        self.assertEqual(response.context["list"], correct_list)
+
 
 class NewListTest(TestCase):
 
