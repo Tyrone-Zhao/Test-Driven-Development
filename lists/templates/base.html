@@ -1,15 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>待办事项列表</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/base.css">
 </head>
 <body>
-    <h1>{% block header_text %}{% endblock %}</h1>
-    <form method="POST" action="{% block form_action %}{% endblock %}">
-        <input id="id_new_item" placeholder="输入一个待办事项" name="item_text">
-        {% csrf_token %}
-    </form>
-    {% block table %}
-    {% endblock %}
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12 jumbotron">
+                <div class="text-center">
+                    <h1>{% block header_text %}{% endblock %}</h1>
+                    <form method="POST" action="{% block form_action %}{% endblock %}">
+                        <input id="id_new_item" placeholder="输入一个待办事项" name="item_text" class="form-control input-lg" />
+                        {% csrf_token %}
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-9">
+                {% block table %}
+                {% endblock %}
+            </div>
+        </div>>
+
+    </div>
 </body>
 </html>
