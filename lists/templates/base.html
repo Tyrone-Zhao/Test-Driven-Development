@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>待办事项列表</title>
+</head>
+<body>
+    <h1>{% block header_text %}{% endblock %}</h1>
+    <form method="POST" action="{% block form_action %}{% endblock %}">
+        <input id="id_new_item" placeholder="输入一个待办事项" name="item_text">
+        {% csrf_token %}
+    </form>
+    {% block table %}
+    {% endblock %}
+</body>
+</html>
