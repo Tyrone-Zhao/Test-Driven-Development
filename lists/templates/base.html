@@ -18,6 +18,11 @@
                     <form method="POST" action="{% block form_action %}{% endblock %}">
                         <input id="id_new_item" placeholder="输入一个待办事项" name="item_text" class="form-control input-lg" />
                         {% csrf_token %}
+                        {% if error %}
+                            <div class="form-group has-error">
+                                <span class="help-block">{{ error }}</span>
+                            </div>
+                        {% endif %}
                     </form>
                 </div>
             </div>
