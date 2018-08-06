@@ -1,5 +1,6 @@
 from django.test import TestCase
 from lists.models import Item, List
+from django.utils.html import escape
 
 
 class HomePageTest(TestCase):
@@ -57,6 +58,20 @@ class NewListTest(TestCase):
                                     data={"item_text": "一个新的待办事项"})
         new_list = List.objects.first()
         self.assertRedirects(response, f"/lists/{new_list.id}/")
+
+    def test_valiadation_errors_are_sent_back_to_home_page_template(self):
+        ''' 测试输入空值时生效错误被发送到了主页模版 '''
+        response = self.client.post("/lists/new", data={"item_text": ""})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "home.html")
+        expected_error = escape("You can't have an empty list item")
+        self.assertContains(response, expected_error)
+
+    def test_invalid_list_items_arent_saved(self):
+        ''' 确保不会保存空待办事项 '''
+        self.client.post("/lists/new", data={"item_text": ""})
+        self.assertEqual(List.objects.count(), 0)
+        self.assertEqual(Item.objects.count(), 0)
 
 
 class NewItemTest(TestCase):
