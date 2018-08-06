@@ -35,7 +35,7 @@ class FunctionalTest(StaticLiveServerTestCase):
                 time.sleep(0.5)
 
     def wait_for(self, fn):
-        ''' 重构后的辅助方法 '''
+        ''' 函数式编程的等待方法 '''
         start_time = time.time()
         while True:
             try:
@@ -44,3 +44,7 @@ class FunctionalTest(StaticLiveServerTestCase):
                 if time.time() - start_time > MAX_WAIT:
                     raise e
                 time.sleep(0.5)
+
+    def get_item_input_box(self):
+        ''' 重构功能测试中需要定位id_new_item的输入框 '''
+        return self.browser.find_element_by_id("id_text")
