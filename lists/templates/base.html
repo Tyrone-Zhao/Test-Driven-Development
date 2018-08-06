@@ -16,7 +16,7 @@
                 <div class="text-center">
                     <h1>{% block header_text %}{% endblock %}</h1>
                     <form method="POST" action="{% block form_action %}{% endblock %}">
-                        <input id="id_new_item" placeholder="输入一个待办事项" name="item_text" class="form-control input-lg" />
+                        {{ form.text }}
                         {% csrf_token %}
                         {% if error %}
                             <div class="form-group has-error">
