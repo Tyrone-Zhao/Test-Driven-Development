@@ -1,6 +1,8 @@
 from django.test import TestCase
-from lists.models import Item, List
 from django.utils.html import escape
+
+from lists.models import Item, List
+from lists.forms import ItemForm
 
 
 class HomePageTest(TestCase):
@@ -10,6 +12,11 @@ class HomePageTest(TestCase):
         ''' 判断访问URL后是否返回了正确的页面结果 '''
         response = self.client.get("/")
         self.assertTemplateUsed(response, "home.html")
+
+    def test_home_page_uses_item_form(self):
+        ''' 测试首页使用了待办事项的表单 '''
+        response = self.client.get("/")
+        self.assertIsInstance(response.context["form"], ItemForm)
 
 
 class ListViewTest(TestCase):
