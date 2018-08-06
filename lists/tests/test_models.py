@@ -3,7 +3,7 @@ from lists.models import Item, List
 from django.core.exceptions import ValidationError
 
 
-class ListAndItemModelsTest(TestCase):
+class ItemModelTest(TestCase):
 
     def test_default_text(self):
         ''' 测试待办事项的默认字符串 '''
@@ -25,6 +25,14 @@ class ListAndItemModelsTest(TestCase):
         with self.assertRaises(ValidationError):
             item.save()
             item.full_clean()
+
+    def test_string_representation(self):
+        ''' 测试待办事项的字符串呈现 '''
+        item = Item(text="some text")
+        self.assertEqual(str(item), "some text")
+
+
+class ListModelTest(TestCase):
 
     def test_get_absolute_url(self):
         ''' 测试Django的模型对象URL '''
@@ -56,8 +64,3 @@ class ListAndItemModelsTest(TestCase):
         self.assertEqual(
             list(Item.objects.all()),
             [item1, item2, item3])
-
-    def test_string_representation(self):
-        ''' 测试待办事项的字符串呈现 '''
-        item = Item(text="some text")
-        self.assertEqual(str(item), "some text")

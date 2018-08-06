@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.utils.html import escape
+from unittest import skip
 
 from lists.models import Item, List
 from lists.forms import ItemForm, EMPTY_ITEM_ERROR
@@ -113,6 +114,20 @@ class ListViewTest(TestCase):
         ''' 测试表单无效输入的页面错误提示 '''
         response = self.post_invalid_input()
         self.assertContains(response, escape(EMPTY_ITEM_ERROR))
+
+    @skip
+    def test_duplicate_item_validation_errors_end_up_on_lists_page(self):
+        ''' 判断重复事项校验返回的错误结果出现在list.html模版 '''
+        list1 = List.objects.create()
+        item1 = Item.objects.create(list=list1, text="textey")
+        response = self.client.post(
+            f"/lists/{list1.id}/",
+            data={"text": "textey"}
+        )
+        expected_error = escape("You've already got this in your list")
+        self.assertContains(response, expected_error)
+        self.assertTemplateUsed(response, "list.html")
+        self.assertEqual(Item.objects.all().count(), 1)
 
 
 class NewListTest(TestCase):
