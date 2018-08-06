@@ -14,7 +14,7 @@ class NewVisitorTest(FunctionalTest):
             "Browser title was " + self.browser.title
 
         # 应用邀请他输入一个待办事项
-        inputbox = self.browser.find_element_by_id("id_new_item")
+        inputbox = self.get_item_input_box()
         self.assertEqual(
             inputbox.get_attribute("placeholder"),
             "输入一个待办事项"
@@ -33,7 +33,7 @@ class NewVisitorTest(FunctionalTest):
         # 页面中又显示了一个文本框，可以输入其他的待办事项
         # 他输入了“把孔雀羽毛收藏到家里”
         # 他做事很有条理
-        inputbox = self.browser.find_element_by_id("id_new_item")
+        inputbox = self.get_item_input_box()
         inputbox.send_keys("把孔雀羽毛收藏到家里")
         inputbox.send_keys(Keys.ENTER)
 
@@ -44,7 +44,7 @@ class NewVisitorTest(FunctionalTest):
     def test_multiple_users_can_start_lists_at_different_urls(self):
         # 小明新建一个待办事项清单
         self.browser.get(self.live_server_url)
-        inputbox = self.browser.find_element_by_id("id_new_item")
+        inputbox = self.get_item_input_box()
         inputbox.send_keys("购买孔雀羽毛")
         inputbox.send_keys(Keys.ENTER)
         self.wait_for_row_in_list_table("1: 购买孔雀羽毛")
@@ -69,7 +69,7 @@ class NewVisitorTest(FunctionalTest):
 
         # 小花输入一个新的待办事项，新建一个清单
         # 他不想小明一样兴趣盎然
-        inputbox = self.browser.find_element_by_id("id_new_item")
+        inputbox = self.get_item_input_box()
         inputbox.send_keys("买牛奶")
         inputbox.send_keys(Keys.ENTER)
         self.wait_for_row_in_list_table("1: 买牛奶")
