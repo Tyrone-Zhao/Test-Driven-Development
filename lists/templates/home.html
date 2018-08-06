@@ -2,4 +2,4 @@
 
 {% block header_text %}创建一个新的待办事项{% endblock %}
 
-{% block form_action %}/lists/new{% endblock %}
+{% block form_action %}{% url "new_list" %}{% endblock %}
