@@ -92,3 +92,7 @@ def _config_systemd_when_reboot_enable(source_folder, site_name):
         " && sudo systemctl start gunicorn-tyrone-zhao.club.service "
         " && sudo systemctl restart gunicorn-tyrone-zhao.club.service "
     )
+
+
+# fab deploy:host=dc2-user@116.85.48.20 && STAGING_SERVER=116.85.48.20 \
+# python3 ../manage.py test functional_tests
