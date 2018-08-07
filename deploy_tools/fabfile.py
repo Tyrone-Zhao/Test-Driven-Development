@@ -1,6 +1,7 @@
 from fabric.contrib.files import append, exists, sed
 from fabric.api import env, local, run
 import random
+import os
 
 REPO_URL = "https://github.com/Tyrone-Zhao/Test-Driven-Development.git"
 
@@ -89,4 +90,5 @@ def _config_systemd_when_reboot_enable(source_folder, site_name):
         " && sudo systemctl reload nginx"
         " && sudo systemctl enable gunicorn-tyrone-zhao.club.service"
         " && sudo systemctl start gunicorn-tyrone-zhao.club.service "
+        " && sudo systemctl restart gunicorn-tyrone-zhao.club.service "
     )
