@@ -71,6 +71,7 @@ def _update_static_files(source_folder):
 def _update_database(source_folder):
     run(
         f"cd {source_folder}"
+        " && rm -rf ../database/db.sqlite3"
         " && ../virtualenv/bin/python manage.py migrate --noinput"
     )
 
