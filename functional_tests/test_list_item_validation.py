@@ -5,6 +5,10 @@ from .base import FunctionalTest
 
 class ItemValidationTest(FunctionalTest):
 
+    def get_error_element(self):
+        ''' 辅助方法，获取错误消息的页面元素 '''
+        return self.browser.find_element_by_css_selector(".has-error")
+
     def test_cannot_add_empty_list_items(self):
         # 小明访问首页，不小心提交了一个空待办事项
         # 输入框中没有输入内容，他就按下了回车键
@@ -56,5 +60,24 @@ class ItemValidationTest(FunctionalTest):
 
         # 他看到一条有帮助的错误消息
         self.wait_for(lambda: self.assertEqual(
-            self.browser.find_element_by_css_selector(".has-error").text,
+            self.get_error_element().text,
             "You've already got this in your list"))
+
+    def test_error_messages_are_cleared_on_input(self):
+        # 小明新建一个清单，但方法不当，所以出现了一个验证错误
+        self.browser.get(self.live_server_url)
+        self.get_item_input_box().send_keys("玩笑开大了")
+        self.get_item_input_box().send_keys(Keys.ENTER)
+        self.wait_for_row_in_list_table("1: 玩笑开大了")
+        self.get_item_input_box().send_keys("玩笑开大了")
+        self.get_item_input_box().send_keys(Keys.ENTER)
+
+        self.wait_for(lambda: self.assertTrue(
+            self.get_error_element().is_displayed()))
+
+        # 为了消除错误，他开始在输入框中输入内容
+        self.get_item_input_box().send_keys("a")
+
+        # 看到错误消息消失了，他很高兴
+        self.wait_for(lambda: self.assertFalse(
+            self.get_error_element().is_displayed()))
