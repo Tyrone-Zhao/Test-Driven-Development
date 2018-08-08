@@ -4,8 +4,8 @@ from django.core.exceptions import ValidationError
 from lists.models import Item
 
 
-EMPTY_ITEM_ERROR = "You can't have an empty list item"
-DUPLICATE_ITEM_ERROR = "You've already got this in your list"
+EMPTY_ITEM_ERROR = "请不要输入空的待办事项"
+DUPLICATE_ITEM_ERROR = "此待办事项已存在"
 
 
 class ItemForm(forms.models.ModelForm):

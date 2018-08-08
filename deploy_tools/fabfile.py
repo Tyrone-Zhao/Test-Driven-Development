@@ -9,7 +9,7 @@ REPO_URL = "https://github.com/Tyrone-Zhao/Test-Driven-Development.git"
 def deploy():
     site_folder = f"/home/{env.user}/sites/{env.host}"
     source_folder = site_folder + "/source"
-    _install_python_and_nginx()
+    # _install_python_and_nginx()
     _create_directory_structure_if_necessary(site_folder)
     _get_latest_source(source_folder)
     _update_settings(source_folder, env.host)
