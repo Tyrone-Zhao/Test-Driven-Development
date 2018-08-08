@@ -17,7 +17,7 @@
                 {% if user.email %}
                     <ul class="nav navbar-nav navbar-right">
                         <li class="navbar-text">登录为: {{ user.email }}</li>
-                        <li><a href="#">注销</a></li>
+                        <li><a href="{% url 'logout' %}">注销</a></li>
                     </ul>
                 {% else %}
                     <form class="navbar-form navbar-right" method="POST" action="{% url 'send_login_email' %}">

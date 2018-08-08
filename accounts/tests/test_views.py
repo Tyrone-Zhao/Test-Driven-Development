@@ -24,7 +24,7 @@ class SendLoginEmailViewTest(TestCase):
 
         self.assertEqual(mock_send_mail.called, True)
         (subject, body, from_email, to_list), kwargs = mock_send_mail.call_args
-        self.assertEqual(subject, "Your login link for Superlists")
+        self.assertEqual(subject, "你的超级表登录链接")
         self.assertEqual(from_email, "tyrone-zhao@qq.com")
         self.assertEqual(to_list, ["200612453@qq.com"])
 
