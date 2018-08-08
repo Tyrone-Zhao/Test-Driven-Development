@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.contrib import auth
+from django.db.utils import IntegrityError
 
 from accounts.models import Token
 
@@ -32,6 +33,6 @@ class TokenModelTest(TestCase):
 
     def test_links_user_with_auto_generated_uid(self):
         ''' 测试测试提交相同email的用户uid相同 '''
-        token1 = Token.objects.create(email="a@b.com")
-        token2 = Token.objects.create(email="a@b.com")
-        self.assertEqual(token1.uid, token2.uid)
+        with self.assertRaises(IntegrityError):
+            token1 = Token.objects.create(email="a@b.com")
+            token2 = Token.objects.create(email="a@b.com")
