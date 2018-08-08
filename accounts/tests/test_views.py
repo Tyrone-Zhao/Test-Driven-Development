@@ -40,6 +40,21 @@ class SendLoginEmailViewTest(TestCase):
         )
         self.assertEqual(message.tags, "success")
 
+    def test_can_save_a_common_email_twice_to_login(self):
+        ''' 测试可以正确的处理两次相同地址的邮件登录 '''
+        response = self.client.post("/accounts/send_login_email", data={
+            "email": "200612453@qq.com"
+        })
+        response = self.client.post("/accounts/send_login_email", data={
+            "email": "200612453@qq.com"
+        }, follow=True)
+        message = list(response.context["messages"])[0]
+        self.assertEqual(
+            message.message,
+            "请在你的邮箱中查收邮件，我们会把登录链接发送给你。"
+        )
+        self.assertEqual(message.tags, "success")
+
 
 @patch("accounts.views.auth")
 class LoginViewTest(TestCase):

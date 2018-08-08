@@ -7,6 +7,9 @@ User=dc2-user
 WorkingDirectory=/home/dc2-user/sites/SITENAME/source
 ExecStart=/home/dc2-user/sites/SITENAME/virtualenv/bin/gunicorn \
     --bind unix:/tmp/SITENAME.socket \
+    --capture-output \
+    --access-logfile ../access.log \
+    --error-logfile ../error.log \
     superlists.wsgi:application
 
 [Install]
