@@ -21,7 +21,7 @@ class LoginTest(FunctionalTest):
 
         # 出现一条消息，告诉他邮件已经发出
         self.wait_for(lambda: self.assertIn(
-            "Check your email",
+            "请在你的邮箱中查收邮件",
             self.browser.find_element_by_tag_name("body").text
         ))
 
@@ -31,10 +31,10 @@ class LoginTest(FunctionalTest):
         self.assertEqual(email.subject, SUBJECT)
 
         # 邮件中有个URL链接
-        self.assertIn("Use this link to log in", email.body)
+        self.assertIn("请使用此链接登录", email.body)
         url_search = re.search(r"http://.+/.+$", email.body)
         if not url_search:
-            self.fail(f"Could not find url in email body:\n{email.body}")
+            self.fail(f"邮件内容中未发现登录链接:\n{email.body}")
         url = url_search.group(0)
         self.assertIn(self.live_server_url, url)
 
@@ -43,7 +43,7 @@ class LoginTest(FunctionalTest):
 
         # 他登录了
         self.wait_for(
-            lambda: self.browser.find_element_by_link_text("Log out")
+            lambda: self.browser.find_element_by_link_text("注销")
         )
         navbar = self.browser.find_element_by_css_selector(".navbar")
         self.assertIn(TEST_EMAIL, navbar.text)

@@ -13,14 +13,35 @@
 
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/">Superlists</a>
-                <form class="navbar-form navbar-right" method="POST" action="#">
-                    <span>Enter email to log in:</span>
-                    <input type="text" name="email" class="form-control">
-                    {% csrf_token %}
-                </form>
+                <a class="navbar-brand" href="/">Superlists超级表</a>
+                {% if user.email %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="navbar-text">登录为: {{ user.email }}</li>
+                        <li><a href="#">注销</a></li>
+                    </ul>
+                {% else %}
+                    <form class="navbar-form navbar-right" method="POST" action="{% url 'send_login_email' %}">
+                        <span>请输入邮件地址登录:</span>
+                        <input type="text" name="email" class="form-control">
+                        {% csrf_token %}
+                    </form>
+                {% endif %}
             </div>
         </nav>
+
+        {% if messages %}
+            <div class="row">
+                <div class="col-md-8">
+                    {% for message in messages %}
+                        {% if message.level_tag == "success" %}
+                            <div class="alert alert-success">{{ message }}</div>
+                        {% else %}
+                            <div class="alert alert-warning">{{ message }}</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
 
         <div class="row">
             <div class="col-md-12 jumbotron">
