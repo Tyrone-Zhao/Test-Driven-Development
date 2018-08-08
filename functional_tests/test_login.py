@@ -6,7 +6,7 @@ from .base import FunctionalTest
 
 
 TEST_EMAIL = "200612453@qq.com"
-SUBJECT = "Your login link for Superlists"
+SUBJECT = "你的超级表登录链接"
 
 
 class LoginTest(FunctionalTest):
@@ -47,3 +47,13 @@ class LoginTest(FunctionalTest):
         )
         navbar = self.browser.find_element_by_css_selector(".navbar")
         self.assertIn(TEST_EMAIL, navbar.text)
+
+        # 现在他要退出
+        self.browser.find_element_by_link_text("注销").click()
+
+        # 他退出了
+        self.wait_for(
+            lambda: self.browser.find_element_by_name("email")
+        )
+        navbar = self.browser.find_element_by_css_selector(".navbar")
+        self.assertNotIn(TEST_EMAIL, navbar.text)
