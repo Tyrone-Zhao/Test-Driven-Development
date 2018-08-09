@@ -65,6 +65,6 @@ class MyListTest(FunctionalTest):
         # 他退出后，"我的待办事项列表"链接不见了
         self.browser.find_element_by_link_text("注销").click()
         self.wait_for(lambda: self.assertEqual(
-            self.browser.find_element_by_link_text("我的待办事项列表"),
+            self.browser.find_elements_by_link_text("我的待办事项列表"),
             []
         ))

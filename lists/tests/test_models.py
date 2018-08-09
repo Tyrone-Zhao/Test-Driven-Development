@@ -1,5 +1,8 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 from lists.models import Item, List
 
@@ -40,6 +43,29 @@ class ListModelTest(TestCase):
         list_ = List.objects.create()
         self.assertEqual(list_.get_absolute_url(), f"/lists/{list_.id}/")
 
+    def test_create_new_creates_list_and_first_item(self):
+        ''' 测试create_new方法创建了事项列表和首个待办事项显示 '''
+        List.create_new(first_item_text="新的待办事项")
+        new_item = Item.objects.first()
+        self.assertEqual(new_item.text, "新的待办事项")
+        new_list = List.objects.first()
+        self.assertEqual(new_item.list, new_list)
+
+    def test_create_new_optionally_saves_owner(self):
+        ''' 测试create_new方法可选是否保存所有者 '''
+        user = User.objects.create()
+        List.create_new(first_item_text="新的待办事项", owner=user)
+        new_list = List.objects.first()
+        self.assertEqual(new_list.owner, user)
+
+    def test_lists_can_have_owners(self):
+        ''' 测试List模型可以保存owner属性 '''
+        List(owner=User())  # 不该抛出异常
+
+    def test_list_owner_is_optional(self):
+        ''' 测试list的owner属性为可选 '''
+        List().full_clean()  # 不该抛出异常
+
     def test_duplicate_items_are_invalid(self):
         ''' 测试重复提交待办事项的无效提示 '''
         list_ = List.objects.create()
@@ -65,3 +91,16 @@ class ListModelTest(TestCase):
         self.assertEqual(
             list(Item.objects.all()),
             [item1, item2, item3])
+
+    def test_create_returns_new_list_object(self):
+        ''' 测试create_new方法创建新列表后返回一个列表对象 '''
+        returned = List.create_new(first_item_text="新的待办事项")
+        new_list = List.objects.first()
+        self.assertEqual(returned, new_list)
+
+    def test_list_name_is_first_item_text(self):
+        ''' 测试待办事项列表的name属性返回第一个待办事项的文本 '''
+        list_ = List.objects.create()
+        Item.objects.create(list=list_, text="第一个待办事项")
+        Item.objects.create(list=list_, text="第二个待办事项")
+        self.assertEqual(list_.name, "第一个待办事项")
