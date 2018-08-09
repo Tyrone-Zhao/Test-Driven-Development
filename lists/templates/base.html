@@ -15,6 +15,9 @@
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">Superlists超级表</a>
                 {% if user.email %}
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a href="{% url 'my_lists' user.email %}">我的待办事项列表</a></li>
+                    </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="navbar-text">登录为: {{ user.email }}</li>
                         <li><a href="{% url 'logout' %}">注销</a></li>
@@ -47,15 +50,17 @@
             <div class="col-md-12 jumbotron">
                 <div class="text-center">
                     <h1>{% block header_text %}{% endblock %}</h1>
-                    <form method="POST" action="{% block form_action %}{% endblock %}">
-                        {{ form.text }}
-                        {% csrf_token %}
-                        {% if form.errors %}
-                            <div class="form-group has-error">
-                                <span class="help-block">{{ form.text.errors }}</span>
-                            </div>
-                        {% endif %}
-                    </form>
+                    {% block list_form %}
+                        <form method="POST" action="{% block form_action %}{% endblock %}">
+                            {{ form.text }}
+                            {% csrf_token %}
+                            {% if form.errors %}
+                                <div class="form-group has-error">
+                                    <span class="help-block">{{ form.text.errors }}</span>
+                                </div>
+                            {% endif %}
+                        </form>
+                    {% endblock %}
                 </div>
             </div>
         </div>
@@ -66,6 +71,13 @@
                 {% endblock %}
             </div>
         </div>>
+
+        <div class="row">
+            <div class="col-md-9">
+                {% block extra_content %}
+                {% endblock %}
+            </div>
+        </div>
 
     </div>
     <script src="/static/node_modules/jquery/dist/jquery.min.js"></script>

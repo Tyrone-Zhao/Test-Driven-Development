@@ -170,3 +170,12 @@ class NewListTest(TestCase):
         ''' 测试无效输入后输入表单会被传递到首页模版 '''
         response = self.client.post("/lists/new", data={"text": ""})
         self.assertIsInstance(response.context["form"], ItemForm)
+
+
+class MyListsTest(TestCase):
+    ''' 我的列表页面测试 '''
+
+    def test_my_lists_url_renders_my_lists_template(self):
+        ''' 测试我的待办事项列表url能渲染对应的模版 '''
+        response = self.client.get("/lists/users/200612453@qq.com/")
+        self.assertTemplateUsed(response, "my_lists.html")

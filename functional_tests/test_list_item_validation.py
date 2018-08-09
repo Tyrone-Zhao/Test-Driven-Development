@@ -50,9 +50,7 @@ class ItemValidationTest(FunctionalTest):
     def test_cannot_add_duplicate_items(self):
         # 小明访问首页，新建一个清单
         self.browser.get(self.live_server_url)
-        self.get_item_input_box().send_keys("买双鞋")
-        self.get_item_input_box().send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table("1: 买双鞋")
+        self.add_list_item("买双鞋")
 
         # 他不小心输入了一个重复的待办事项
         self.get_item_input_box().send_keys("买双鞋")
@@ -66,9 +64,7 @@ class ItemValidationTest(FunctionalTest):
     def test_error_messages_are_cleared_on_input(self):
         # 小明新建一个清单，但方法不当，所以出现了一个验证错误
         self.browser.get(self.live_server_url)
-        self.get_item_input_box().send_keys("玩笑开大了")
-        self.get_item_input_box().send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table("1: 玩笑开大了")
+        self.add_list_item("玩笑开大了")
         self.get_item_input_box().send_keys("玩笑开大了")
         self.get_item_input_box().send_keys(Keys.ENTER)
 
