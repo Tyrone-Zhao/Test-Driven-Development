@@ -32,15 +32,6 @@ class ItemFormTest(TestCase):
             [EMPTY_ITEM_ERROR]
         )
 
-    def test_form_save_handles_saving_to_a_list(self):
-        ''' 测试表单可以处理待办事项列表的存储操作 '''
-        list_ = List.objects.create()
-        form = ItemForm(data={"text": "do me"})
-        new_item = form.save(for_list=list_)
-        self.assertEqual(new_item, Item.objects.first())
-        self.assertEqual(new_item.text, "do me")
-        self.assertEqual(new_item.list, list_)
-
 
 class NewListFormTest(unittest.TestCase):
     ''' 新的待办事项列表表单测试 '''

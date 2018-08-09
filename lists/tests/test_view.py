@@ -12,7 +12,7 @@ from lists.forms import (
     DUPLICATE_ITEM_ERROR, EMPTY_ITEM_ERROR,
     ExistingListItemForm, ItemForm
 )
-from lists.views import new_list2
+from lists.views import new_list
 
 
 class HomePageTest(TestCase):
@@ -148,37 +148,14 @@ class NewListViewIntegratedTest(TestCase):
         new_item = Item.objects.first()
         self.assertEqual(new_item.text, "一个新的待办事项")
 
-    def test_redirects_after_POST(self):
-        ''' 判断处理完POST请求后可以正确的重定向到指定新建清单的URL '''
-        response = self.client.post("/lists/new",
-                                    data={"text": "一个新的待办事项"})
-        new_list = List.objects.first()
-        self.assertRedirects(response, f"/lists/{new_list.id}/")
-
-    def test_invalid_list_items_arent_saved(self):
-        ''' 确保不会保存空待办事项 '''
-        self.client.post("/lists/new", data={"text": ""})
-        self.assertEqual(List.objects.count(), 0)
-        self.assertEqual(Item.objects.count(), 0)
-
-    def test_for_invalid_input_renders_home_template(self):
-        ''' 测试无效输入返回主页模版 '''
-        response = self.client.post("/lists/new", data={"text": ""})
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "home.html")
-
-    def test_validation_errors_are_shown_on_home_page(self):
+    def test_for_invalid_input_doesnt_save_but_shows_errors(self):
         ''' 测试无效输入在首页显示错误消息 '''
         response = self.client.post("/lists/new", data={"text": ""})
+        self.assertEqual(List.objects.count(), 0)
         self.assertContains(response, escape(EMPTY_ITEM_ERROR))
 
-    def test_for_invalid_input_passes_form_to_template(self):
-        ''' 测试无效输入后输入表单会被传递到首页模版 '''
-        response = self.client.post("/lists/new", data={"text": ""})
-        self.assertIsInstance(response.context["form"], ItemForm)
-
     def test_list_owner_is_saved_if_user_is_authenticated(self):
-        ''' 测试用户登录后创建待办事项会被保存为当前列表的所有者 '''
+        ''' 测试用户登录后创建待办事项后，当前列表回归属于当前用户 '''
         user = User.objects.create(email="200612453@qq.com")
         self.client.force_login(user)
         self.client.post("/lists/new", data={"text": "新事项"})
@@ -214,14 +191,14 @@ class NewListViewUnitTest(unittest.TestCase):
 
     def test_passes_POST_data_to_NewListForm(self, mockNewListForm):
         ''' 测试列表视图传递POST数据到新列表表单 '''
-        new_list2(self.request)
+        new_list(self.request)
         mockNewListForm.assert_called_once_with(data=self.request.POST)
 
     def test_saves_form_with_owner_if_form_valid(self, mockNewListForm):
         ''' 测试表单有效时对所有者的保存功能 '''
         mock_form = mockNewListForm.return_value
         mock_form.is_valid.return_value = True
-        new_list2(self.request)
+        new_list(self.request)
         mock_form.save.assert_called_once_with(owner=self.request.user)
 
     @patch("lists.views.redirect")
@@ -232,7 +209,7 @@ class NewListViewUnitTest(unittest.TestCase):
         mock_form = mockNewListForm.return_value
         mock_form.is_valid.return_value = True
 
-        response = new_list2(self.request)
+        response = new_list(self.request)
 
         self.assertEqual(response, mock_redirect.return_value)
         mock_redirect.assert_called_once_with(
@@ -246,7 +223,7 @@ class NewListViewUnitTest(unittest.TestCase):
         mock_form = mockNewListForm.return_value
         mock_form.is_valid.return_value = False
 
-        response = new_list2(self.request)
+        response = new_list(self.request)
 
         self.assertEqual(response, mock_render.return_value)
         mock_render.assert_called_once_with(
@@ -257,5 +234,5 @@ class NewListViewUnitTest(unittest.TestCase):
         ''' 测试form内容无效时不应该保存 '''
         mock_form = mockNewListForm.return_value
         mock_form.is_valid.return_value = False
-        new_list2(self.request)
+        new_list(self.request)
         self.assertFalse(mock_form.save.called)
