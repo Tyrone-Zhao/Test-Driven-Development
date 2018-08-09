@@ -1,6 +1,9 @@
 from django.test import TestCase
 from django.utils.html import escape
 from unittest import skip
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 from lists.models import Item, List
 from lists.forms import (
@@ -171,11 +174,27 @@ class NewListTest(TestCase):
         response = self.client.post("/lists/new", data={"text": ""})
         self.assertIsInstance(response.context["form"], ItemForm)
 
+    def test_list_owner_is_saved_if_user_is_authenticated(self):
+        ''' 测试已登录用户新建列表时会自动被指定为待办事项列表所有者 '''
+        user = User.objects.create(email="200612453@qq.com")
+        self.client.force_login(user)
+        self.client.post("/lists/new", data={"text": "新事项"})
+        list_ = List.objects.first()
+        self.assertEqual(list_.owner, user)
+
 
 class MyListsTest(TestCase):
     ''' 我的列表页面测试 '''
 
     def test_my_lists_url_renders_my_lists_template(self):
         ''' 测试我的待办事项列表url能渲染对应的模版 '''
+        User.objects.create(email="200612453@qq.com")
         response = self.client.get("/lists/users/200612453@qq.com/")
         self.assertTemplateUsed(response, "my_lists.html")
+
+    def test_passes_correct_owner_to_template(self):
+        ''' 测试传递了正确的待办事项列表所有者，到模版 '''
+        User.objects.create(email="200612453@qq.com")
+        correct_user = User.objects.create(email="jiaowoyuluo@vip.qq.com")
+        response = self.client.get("/lists/users/jiaowoyuluo@vip.qq.com/")
+        self.assertEqual(response.context["owner"], correct_user)
