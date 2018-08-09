@@ -108,6 +108,6 @@ def _config_systemd_when_reboot_enable(source_folder, site_name):
 
 def _update_systemd_when_reboot_enable(source_folder, site_name):
     run(
-        " && sudo systemctl daemon-reload"
+        "sudo systemctl daemon-reload"
         " && sudo systemctl restart gunicorn-tyrone-zhao.club.service "
     )
