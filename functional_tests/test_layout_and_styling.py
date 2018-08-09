@@ -18,9 +18,7 @@ class LayoutAndStylingTest(FunctionalTest):
         )
 
         # 他新建了一个清单，看到输入框仍完美地居中显示
-        inputbox.send_keys("测试")
-        inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table("1: 测试")
+        self.add_list_item("测试")
         inputbox = self.get_item_input_box()
         self.assertAlmostEqual(
             inputbox.location["x"] + inputbox.size["width"] / 2,

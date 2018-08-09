@@ -22,32 +22,20 @@ class NewVisitorTest(FunctionalTest):
 
         # 他在一个文本框中输入了"购买孔雀羽毛"
         # 它的爱好是购买稀有的东西收藏起来
-        inputbox.send_keys("购买孔雀羽毛")
-
         # 他按回车键后，页面更新了
         # 待办事项表格中显示了"1: 购买孔雀羽毛"
-        inputbox.send_keys(Keys.ENTER)
-
-        self.wait_for_row_in_list_table("1: 购买孔雀羽毛")
+        self.add_list_item("购买孔雀羽毛")
 
         # 页面中又显示了一个文本框，可以输入其他的待办事项
         # 他输入了“把孔雀羽毛收藏到家里”
         # 他做事很有条理
-        inputbox = self.get_item_input_box()
-        inputbox.send_keys("把孔雀羽毛收藏到家里")
-        inputbox.send_keys(Keys.ENTER)
-
         # 页面再次更新，他的清单中显示了这两个待办事项
-        self.wait_for_row_in_list_table("1: 购买孔雀羽毛")
-        self.wait_for_row_in_list_table("2: 把孔雀羽毛收藏到家里")
+        self.add_list_item("把孔雀羽毛收藏到家里")
 
     def test_multiple_users_can_start_lists_at_different_urls(self):
         # 小明新建一个待办事项清单
         self.browser.get(self.live_server_url)
-        inputbox = self.get_item_input_box()
-        inputbox.send_keys("购买孔雀羽毛")
-        inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table("1: 购买孔雀羽毛")
+        self.add_list_item("购买孔雀羽毛")
 
         # 他注意到清单有个唯一的URL
         ming_list_url = self.browser.current_url
@@ -70,9 +58,7 @@ class NewVisitorTest(FunctionalTest):
         # 小花输入一个新的待办事项，新建一个清单
         # 他不想小明一样兴趣盎然
         inputbox = self.get_item_input_box()
-        inputbox.send_keys("买牛奶")
-        inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table("1: 买牛奶")
+        self.add_list_item("买牛奶")
 
         # 小花获得了他的唯一URL
         hua_list_url = self.browser.current_url
