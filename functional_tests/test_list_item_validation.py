@@ -61,7 +61,7 @@ class ItemValidationTest(FunctionalTest):
         # 他看到一条有帮助的错误消息
         self.wait_for(lambda: self.assertEqual(
             self.get_error_element().text,
-            "You've already got this in your list"))
+            "此待办事项已存在"))
 
     def test_error_messages_are_cleared_on_input(self):
         # 小明新建一个清单，但方法不当，所以出现了一个验证错误
