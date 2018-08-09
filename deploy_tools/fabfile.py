@@ -9,7 +9,7 @@ REPO_URL = "https://github.com/Tyrone-Zhao/Test-Driven-Development.git"
 def deploy():
     site_folder = f"/home/{env.user}/sites/{env.host}"
     source_folder = site_folder + "/source"
-    # _install_python_and_nginx()
+    _install_python_and_nginx()
     _create_directory_structure_if_necessary(site_folder)
     _get_latest_source(source_folder)
     _update_settings(source_folder, env.host)
@@ -17,6 +17,18 @@ def deploy():
     _update_static_files(source_folder)
     _update_database(source_folder)
     _config_systemd_when_reboot_enable(source_folder, env.host)
+
+
+def update():
+    site_folder = f"/home/{env.user}/sites/{env.host}"
+    source_folder = site_folder + "/source"
+    _create_directory_structure_if_necessary(site_folder)
+    _get_latest_source(source_folder)
+    _update_settings(source_folder, env.host)
+    _update_virtualenv(source_folder)
+    _update_static_files(source_folder)
+    _update_database(source_folder)
+    _update_systemd_when_reboot_enable(source_folder, env.host)
 
 
 def _install_python_and_nginx():
@@ -90,5 +102,12 @@ def _config_systemd_when_reboot_enable(source_folder, site_name):
         " && sudo systemctl reload nginx"
         " && sudo systemctl enable gunicorn-tyrone-zhao.club.service"
         " && sudo systemctl start gunicorn-tyrone-zhao.club.service "
+        " && sudo systemctl restart gunicorn-tyrone-zhao.club.service "
+    )
+
+
+def _update_systemd_when_reboot_enable(source_folder, site_name):
+    run(
+        " && sudo systemctl daemon-reload"
         " && sudo systemctl restart gunicorn-tyrone-zhao.club.service "
     )

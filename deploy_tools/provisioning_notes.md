@@ -41,6 +41,9 @@ $ sudo systemctl enable gunicorn-tyrone-zhao.club.service
 $ sudo systemctl start gunicorn-tyrone-zhao.club.service 
 
 * 把SITENAME替换成所需的域名，例如staging.my-domain.com
+* 把SEKRIT替换成电子邮件密码
+* 终端命令中export QQ_PASSWORD=邮箱授权码
+* 过渡服务器service添加Environment=EMAIL_PASSWORD=邮箱授权码
 
 ## 文件夹结构：
 假设有用户账户，家目录为/home/username
@@ -51,4 +54,4 @@ $ sudo systemctl start gunicorn-tyrone-zhao.club.service
         |-- database
         |-- source
         |-- static
-        `-- virtualenv
+        `-- virtualenv 
