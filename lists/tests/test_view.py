@@ -1,6 +1,8 @@
 from django.test import TestCase
 from django.utils.html import escape
-from unittest import skip
+from django.http import HttpRequest
+import unittest
+from unittest.mock import patch, Mock
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -10,6 +12,7 @@ from lists.forms import (
     DUPLICATE_ITEM_ERROR, EMPTY_ITEM_ERROR,
     ExistingListItemForm, ItemForm
 )
+from lists.views import new_list2
 
 
 class HomePageTest(TestCase):
@@ -135,7 +138,7 @@ class ListViewTest(TestCase):
         self.assertEqual(Item.objects.all().count(), 1)
 
 
-class NewListTest(TestCase):
+class NewListViewIntegratedTest(TestCase):
     ''' 测试新建待办事项列表 '''
 
     def test_can_save_a_POST_request(self):
@@ -174,8 +177,9 @@ class NewListTest(TestCase):
         response = self.client.post("/lists/new", data={"text": ""})
         self.assertIsInstance(response.context["form"], ItemForm)
 
+    @unittest.skip
     def test_list_owner_is_saved_if_user_is_authenticated(self):
-        ''' 测试已登录用户新建列表时会自动被指定为待办事项列表所有者 '''
+        ''' 测试用户登录后创建待办事项会被保存为当前列表的所有者 '''
         user = User.objects.create(email="200612453@qq.com")
         self.client.force_login(user)
         self.client.post("/lists/new", data={"text": "新事项"})
@@ -198,3 +202,53 @@ class MyListsTest(TestCase):
         correct_user = User.objects.create(email="jiaowoyuluo@vip.qq.com")
         response = self.client.get("/lists/users/jiaowoyuluo@vip.qq.com/")
         self.assertEqual(response.context["owner"], correct_user)
+
+
+@patch("lists.views.NewListForm")
+class NewListViewUnitTest(unittest.TestCase):
+    ''' 新的列表视图测试类 '''
+
+    def setUp(self):
+        self.request = HttpRequest()
+        self.request.POST["text"] = "新的待办事项"
+        self.request.user = Mock()
+
+    def test_passes_POST_data_to_NewListForm(self, mockNewListForm):
+        ''' 测试列表视图传递POST数据到新列表表单 '''
+        new_list2(self.request)
+        mockNewListForm.assert_called_once_with(data=self.request.POST)
+
+    def test_saves_form_with_owner_if_form_valid(self, mockNewListForm):
+        ''' 测试表单有效时对所有者的保存功能 '''
+        mock_form = mockNewListForm.return_value
+        mock_form.is_valid.return_value = True
+        new_list2(self.request)
+        mock_form.save.assert_called_once_with(owner=self.request.user)
+
+    @patch("lists.views.redirect")
+    def test_redirects_to_form_returned_object_if_form_valid(
+        self, mock_redirect, mockNewListForm
+    ):
+        ''' 测试表单有效时视图会重定向到一个显示刚刚提交的表单的页面 '''
+        mock_form = mockNewListForm.return_value
+        mock_form.is_valid.return_value = True
+
+        response = new_list2(self.request)
+
+        self.assertEqual(response, mock_redirect.return_value)
+        mock_redirect.assert_called_once_with(str(mock_form.save.return_value))
+
+    @patch("lists.views.render")
+    def test_renders_home_template_with_form_if_form_invalid(
+        self, mock_render, mockNewListForm
+    ):
+        ''' 测试如果表单无效，那么返回主页模版 '''
+        mock_form = mockNewListForm.return_value
+        mock_form.is_valid.return_value = False
+
+        response = new_list2(self.request)
+
+        self.assertEqual(response, mock_render.return_value)
+        mock_render.assert_called_once_with(
+            self.request, "home.html", {"form": mock_form}
+        )
