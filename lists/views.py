@@ -5,7 +5,10 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 from lists.models import Item, List
-from lists.forms import ItemForm, ExistingListItemForm
+from lists.forms import ItemForm, ExistingListItemForm, NewListForm
+
+
+form = None
 
 
 def home_page(request):
@@ -31,9 +34,15 @@ def new_list(request):
         list_.owner = request.user
         list_.save()
         form.save(for_list=list_)
-        return redirect(list_)
+        return redirect(str(list_.get_absolute_url()))
     else:
         return render(request, "home.html", {"form": form})
+
+
+def new_list2(request):
+    form = NewListForm(data=request.POST)
+    list_ = form.save(owner=request.user)
+    return redirect(str(list_))
 
 
 def my_lists(request, email):
