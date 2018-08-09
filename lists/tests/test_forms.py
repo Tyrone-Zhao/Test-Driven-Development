@@ -1,8 +1,10 @@
 from django.test import TestCase
+from unittest.mock import patch, Mock
+import unittest
 
 from lists.forms import (
     DUPLICATE_ITEM_ERROR, EMPTY_ITEM_ERROR,
-    ExistingListItemForm, ItemForm
+    ExistingListItemForm, ItemForm, NewListForm
 )
 from lists.models import Item, List
 
@@ -38,6 +40,45 @@ class ItemFormTest(TestCase):
         self.assertEqual(new_item, Item.objects.first())
         self.assertEqual(new_item.text, "do me")
         self.assertEqual(new_item.list, list_)
+
+
+class NewListFormTest(unittest.TestCase):
+    ''' 新的待办事项列表表单测试 '''
+
+    @patch("lists.forms.List.create_new")
+    def test_save_creates_new_list_from_post_data_if_user_not_authenticated(
+        self, mock_List_create_new
+    ):
+        ''' 测试从未认证的用户表单请求中保存新的待办事项列表 '''
+        user = Mock(is_authenticated=False)
+        form = NewListForm(data={"text": "新的待办事项"})
+        form.is_valid()
+        form.save(owner=user)
+        mock_List_create_new.assert_called_once_with(
+            first_item_text="新的待办事项"
+        )
+
+    @patch("lists.forms.List.create_new")
+    def test_save_creates_new_list_with_owner_if_user_authenticated(
+        self, mock_List_create_new
+    ):
+        ''' 测试从已认证的用户表单请求中保存新的待办事项列表 '''
+        user = Mock(is_authenticated=True)
+        form = NewListForm(data={"text": "新的待办事项"})
+        form.is_valid()
+        form.save(owner=user)
+        mock_List_create_new.assert_called_once_with(
+            first_item_text="新的待办事项", owner=user
+        )
+
+    @patch("lists.forms.List.create_new")
+    def test_save_returns_new_list_object(self, mock_List_create_new):
+        ''' 测试create_new方法调用后，返回一个新的待办事项列表对象 '''
+        user = Mock(is_authenticated=True)
+        form = NewListForm(data={"text": "新的待办事项"})
+        form.is_valid()
+        response = form.save(owner=user)
+        self.assertEqual(response, mock_List_create_new.return_value)
 
 
 class ExistingListItemFormTest(TestCase):

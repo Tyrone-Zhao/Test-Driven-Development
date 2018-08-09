@@ -177,7 +177,6 @@ class NewListViewIntegratedTest(TestCase):
         response = self.client.post("/lists/new", data={"text": ""})
         self.assertIsInstance(response.context["form"], ItemForm)
 
-    @unittest.skip
     def test_list_owner_is_saved_if_user_is_authenticated(self):
         ''' 测试用户登录后创建待办事项会被保存为当前列表的所有者 '''
         user = User.objects.create(email="200612453@qq.com")
@@ -236,7 +235,8 @@ class NewListViewUnitTest(unittest.TestCase):
         response = new_list2(self.request)
 
         self.assertEqual(response, mock_redirect.return_value)
-        mock_redirect.assert_called_once_with(str(mock_form.save.return_value))
+        mock_redirect.assert_called_once_with(
+            str(mock_form.save().get_absolute_url.return_value))
 
     @patch("lists.views.render")
     def test_renders_home_template_with_form_if_form_invalid(
@@ -252,3 +252,10 @@ class NewListViewUnitTest(unittest.TestCase):
         mock_render.assert_called_once_with(
             self.request, "home.html", {"form": mock_form}
         )
+
+    def test_does_not_save_if_form_invalid(self, mockNewListForm):
+        ''' 测试form内容无效时不应该保存 '''
+        mock_form = mockNewListForm.return_value
+        mock_form.is_valid.return_value = False
+        new_list2(self.request)
+        self.assertFalse(mock_form.save.called)
