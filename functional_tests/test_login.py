@@ -46,7 +46,6 @@ class LoginTest(FunctionalTest):
                         else:
                             new_lines.append(l)
                             body = "\n".join(new_lines)
-                    print(body)
                     return body
                 time.sleep(5)
         finally:
