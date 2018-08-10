@@ -107,7 +107,6 @@ class LoginTest(FunctionalTest):
 
         # 他查看邮件，看到一条消息
         body = self.wait_for_email(test_email, SUBJECT)
-        print(body)
 
         # 邮件中有个URL链接
         self.assertIn("请使用此链接登录", body)
