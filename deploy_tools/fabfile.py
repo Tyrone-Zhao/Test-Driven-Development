@@ -47,8 +47,9 @@ def _get_latest_source(source_folder):
         run(f"cd {source_folder} && git fetch")
     else:
         run(f"git clone {REPO_URL} {source_folder}")
-    current_commit = local("git log -n 1 --format=%H", capture=True)
-    run(f"cd {source_folder} && git reset --hard {current_commit}")
+    # current_commit = local("git log -n 1 --format=%H", capture=True)
+    # run(f"cd {source_folder} && git reset --hard {current_commit}")
+    run(f"cd {source_folder} && git reset --hard && git pull")
 
 
 def _update_settings(source_folder, site_name):
