@@ -37,7 +37,7 @@ class LoginTest(FunctionalTest):
                     lines = [l.decode() for l in lines]
                     new_lines = []
                     for l in lines:
-                        if "Subject" in l:
+                        if "Subject" in l and "Jenkins" not in l:
                             print(l)
                             subject = base64.b64decode(l[19:]).decode()
                             if subject == SUBJECT:
@@ -46,6 +46,7 @@ class LoginTest(FunctionalTest):
                         else:
                             new_lines.append(l)
                             body = "\n".join(new_lines)
+                    print(body)
                     return body
                 time.sleep(5)
         finally:
