@@ -1,15 +1,9 @@
-************* Module superlists.accounts.models
+************* Module accounts.models
 accounts/models.py:1: [C0111(missing-docstring), ] Missing module docstring
 accounts/models.py:8: [C0111(missing-docstring), User] Missing class docstring
 accounts/models.py:16: [C0111(missing-docstring), Token] Missing class docstring
 accounts/models.py:2: [C0411(wrong-import-order), ] standard import "import uuid" should be placed before "from django.db import models"
-************* Module superlists.accounts.apps
-accounts/apps.py:1: [C0111(missing-docstring), ] Missing module docstring
-accounts/apps.py:4: [C0111(missing-docstring), AccountsConfig] Missing class docstring
-************* Module superlists.accounts.admin
-accounts/admin.py:1: [C0111(missing-docstring), ] Missing module docstring
-accounts/admin.py:1: [W0611(unused-import), ] Unused admin imported from django.contrib
-************* Module superlists.accounts.authentication
+************* Module accounts.authentication
 accounts/authentication.py:1: [C0111(missing-docstring), ] Missing module docstring
 accounts/authentication.py:4: [R0205(useless-object-inheritance), PasswordlessAuthenticationBackend] Class 'PasswordlessAuthenticationBackend' inherits from object, can be safely removed from bases in python3
 accounts/authentication.py:10: [E1101(no-member), PasswordlessAuthenticationBackend.authenticate] Class 'Token' has no 'objects' member
@@ -22,45 +16,13 @@ accounts/authentication.py:17: [C0111(missing-docstring), PasswordlessAuthentica
 accounts/authentication.py:19: [E1101(no-member), PasswordlessAuthenticationBackend.get_user] Class 'User' has no 'objects' member
 accounts/authentication.py:20: [E1101(no-member), PasswordlessAuthenticationBackend.get_user] Class 'User' has no 'DoesNotExist' member
 accounts/authentication.py:17: [R0201(no-self-use), PasswordlessAuthenticationBackend.get_user] Method could be a function
-************* Module superlists.accounts.urls
-accounts/urls.py:1: [C0111(missing-docstring), ] Missing module docstring
-accounts/urls.py:7: [C0103(invalid-name), ] Constant name "urlpatterns" doesn't conform to UPPER_CASE naming style
-************* Module superlists.accounts.views
+************* Module accounts.views
 accounts/views.py:1: [C0111(missing-docstring), ] Missing module docstring
 accounts/views.py:9: [C0111(missing-docstring), send_login_email] Missing function docstring
 accounts/views.py:11: [E1101(no-member), send_login_email] Class 'Token' has no 'objects' member
 accounts/views.py:13: [E1101(no-member), send_login_email] Class 'Token' has no 'objects' member
 accounts/views.py:31: [C0111(missing-docstring), login] Missing function docstring
-************* Module superlists.accounts.migrations.0002_token
-accounts/migrations/0002_token.py:17: [C0301(line-too-long), ] Line too long (114/100)
-accounts/migrations/0002_token.py:19: [C0301(line-too-long), ] Line too long (116/100)
-accounts/migrations/0002_token.py:1: [C0103(invalid-name), ] Module name "0002_token" doesn't conform to snake_case naming style
-accounts/migrations/0002_token.py:1: [C0111(missing-docstring), ] Missing module docstring
-accounts/migrations/0002_token.py:7: [C0111(missing-docstring), Migration] Missing class docstring
-accounts/migrations/0002_token.py:4: [C0411(wrong-import-order), ] standard import "import uuid" should be placed before "from django.db import migrations, models"
-************* Module superlists.accounts.migrations.0005_auto_20180809_1552
-accounts/migrations/0005_auto_20180809_1552.py:17: [C0301(line-too-long), ] Line too long (109/100)
-accounts/migrations/0005_auto_20180809_1552.py:1: [C0103(invalid-name), ] Module name "0005_auto_20180809_1552" doesn't conform to snake_case naming style
-accounts/migrations/0005_auto_20180809_1552.py:1: [C0111(missing-docstring), ] Missing module docstring
-accounts/migrations/0005_auto_20180809_1552.py:7: [C0111(missing-docstring), Migration] Missing class docstring
-accounts/migrations/0005_auto_20180809_1552.py:4: [C0411(wrong-import-order), ] standard import "import uuid" should be placed before "from django.db import migrations, models"
-************* Module superlists.accounts.migrations.0003_auto_20180808_1539
-accounts/migrations/0003_auto_20180808_1539.py:26: [C0301(line-too-long), ] Line too long (109/100)
-accounts/migrations/0003_auto_20180808_1539.py:1: [C0103(invalid-name), ] Module name "0003_auto_20180808_1539" doesn't conform to snake_case naming style
-accounts/migrations/0003_auto_20180808_1539.py:1: [C0111(missing-docstring), ] Missing module docstring
-accounts/migrations/0003_auto_20180808_1539.py:7: [C0111(missing-docstring), Migration] Missing class docstring
-accounts/migrations/0003_auto_20180808_1539.py:4: [C0411(wrong-import-order), ] standard import "import uuid" should be placed before "from django.db import migrations, models"
-************* Module superlists.accounts.migrations.0001_initial
-accounts/migrations/0001_initial.py:1: [C0103(invalid-name), ] Module name "0001_initial" doesn't conform to snake_case naming style
-accounts/migrations/0001_initial.py:1: [C0111(missing-docstring), ] Missing module docstring
-accounts/migrations/0001_initial.py:6: [C0111(missing-docstring), Migration] Missing class docstring
-************* Module superlists.accounts.migrations.0004_auto_20180809_1524
-accounts/migrations/0004_auto_20180809_1524.py:17: [C0301(line-too-long), ] Line too long (109/100)
-accounts/migrations/0004_auto_20180809_1524.py:1: [C0103(invalid-name), ] Module name "0004_auto_20180809_1524" doesn't conform to snake_case naming style
-accounts/migrations/0004_auto_20180809_1524.py:1: [C0111(missing-docstring), ] Missing module docstring
-accounts/migrations/0004_auto_20180809_1524.py:7: [C0111(missing-docstring), Migration] Missing class docstring
-accounts/migrations/0004_auto_20180809_1524.py:4: [C0411(wrong-import-order), ] standard import "import uuid" should be placed before "from django.db import migrations, models"
-************* Module superlists.lists.models
+************* Module lists.models
 lists/models.py:1: [C0111(missing-docstring), ] Missing module docstring
 lists/models.py:6: [C0111(missing-docstring), List] Missing class docstring
 lists/models.py:13: [C0111(missing-docstring), List.name] Missing method docstring
@@ -73,10 +35,7 @@ lists/models.py:22: [E1101(no-member), List.create_new] Class 'Item' has no 'obj
 lists/models.py:26: [C0111(missing-docstring), Item] Missing class docstring
 lists/models.py:30: [C0111(missing-docstring), Item.Meta] Missing class docstring
 lists/models.py:30: [R0903(too-few-public-methods), Item.Meta] Too few public methods (0/2)
-************* Module superlists.lists.apps
-lists/apps.py:1: [C0111(missing-docstring), ] Missing module docstring
-lists/apps.py:4: [C0111(missing-docstring), ListsConfig] Missing class docstring
-************* Module superlists.lists.forms
+************* Module lists.forms
 lists/forms.py:1: [C0111(missing-docstring), ] Missing module docstring
 lists/forms.py:11: [C0111(missing-docstring), ItemForm] Missing class docstring
 lists/forms.py:13: [C0111(missing-docstring), ItemForm.Meta] Missing class docstring
@@ -86,72 +45,22 @@ lists/forms.py:29: [W0221(arguments-differ), NewListForm.save] Parameters differ
 lists/forms.py:30: [R1705(no-else-return), NewListForm.save] Unnecessary "else" after "return"
 lists/forms.py:41: [C0111(missing-docstring), ExistingListItemForm] Missing class docstring
 lists/forms.py:50: [C0103(invalid-name), ExistingListItemForm.validate_unique] Variable name "e" doesn't conform to snake_case naming style
-************* Module superlists.lists.admin
-lists/admin.py:1: [C0111(missing-docstring), ] Missing module docstring
-lists/admin.py:1: [W0611(unused-import), ] Unused admin imported from django.contrib
-************* Module superlists.lists.urls
-lists/urls.py:20: [C0103(invalid-name), ] Constant name "urlpatterns" doesn't conform to UPPER_CASE naming style
-lists/urls.py:18: [C0411(wrong-import-order), ] third party import "from django.contrib.staticfiles.urls import staticfiles_urlpatterns" should be placed before "from lists import views"
-lists/urls.py:18: [C0412(ungrouped-imports), ] Imports from package django are not grouped
-************* Module superlists.lists.views
+************* Module lists.views
 lists/views.py:1: [C0111(missing-docstring), ] Missing module docstring
-lists/views.py:5: [C0103(invalid-name), ] Constant name "User" doesn't conform to UPPER_CASE naming style
-lists/views.py:7: [C0413(wrong-import-position), ] Import "from lists.models import Item, List" should be placed at the top of the module
-lists/views.py:8: [C0413(wrong-import-position), ] Import "from lists.forms import ItemForm, ExistingListItemForm, NewListForm" should be placed at the top of the module
-lists/views.py:11: [C0103(invalid-name), ] Constant name "form" doesn't conform to UPPER_CASE naming style
-lists/views.py:14: [C0111(missing-docstring), home_page] Missing function docstring
-lists/views.py:20: [W0621(redefined-outer-name), view_list] Redefining name 'form' from outer scope (line 11)
-lists/views.py:18: [C0111(missing-docstring), view_list] Missing function docstring
-lists/views.py:19: [E1101(no-member), view_list] Class 'List' has no 'objects' member
-lists/views.py:31: [W0621(redefined-outer-name), new_list] Redefining name 'form' from outer scope (line 11)
-lists/views.py:30: [C0111(missing-docstring), new_list] Missing function docstring
-lists/views.py:32: [R1705(no-else-return), new_list] Unnecessary "else" after "return"
-lists/views.py:39: [C0111(missing-docstring), my_lists] Missing function docstring
-lists/views.py:2: [W0611(unused-import), ] Unused ValidationError imported from django.core.exceptions
-lists/views.py:7: [W0611(unused-import), ] Unused Item imported from lists.models
-************* Module superlists.lists.migrations.0002_list_item_unique_together
-lists/migrations/0002_list_item_unique_together.py:1: [C0103(invalid-name), ] Module name "0002_list_item_unique_together" doesn't conform to snake_case naming style
-lists/migrations/0002_list_item_unique_together.py:1: [C0111(missing-docstring), ] Missing module docstring
-lists/migrations/0002_list_item_unique_together.py:6: [C0111(missing-docstring), Migration] Missing class docstring
-************* Module superlists.lists.migrations.0001_initial
-lists/migrations/0001_initial.py:18: [C0301(line-too-long), ] Line too long (114/100)
-lists/migrations/0001_initial.py:25: [C0301(line-too-long), ] Line too long (114/100)
-lists/migrations/0001_initial.py:31: [C0301(line-too-long), ] Line too long (112/100)
-lists/migrations/0001_initial.py:1: [C0103(invalid-name), ] Module name "0001_initial" doesn't conform to snake_case naming style
-lists/migrations/0001_initial.py:1: [C0111(missing-docstring), ] Missing module docstring
-lists/migrations/0001_initial.py:7: [C0111(missing-docstring), Migration] Missing class docstring
-************* Module superlists.lists.migrations.0003_auto_20180808_0302
-lists/migrations/0003_auto_20180808_0302.py:1: [C0103(invalid-name), ] Module name "0003_auto_20180808_0302" doesn't conform to snake_case naming style
-lists/migrations/0003_auto_20180808_0302.py:1: [C0111(missing-docstring), ] Missing module docstring
-lists/migrations/0003_auto_20180808_0302.py:6: [C0111(missing-docstring), Migration] Missing class docstring
-************* Module superlists.lists.migrations.0004_list_owner
-lists/migrations/0004_list_owner.py:19: [C0301(line-too-long), ] Line too long (133/100)
-lists/migrations/0004_list_owner.py:1: [C0103(invalid-name), ] Module name "0004_list_owner" doesn't conform to snake_case naming style
-lists/migrations/0004_list_owner.py:1: [C0111(missing-docstring), ] Missing module docstring
-lists/migrations/0004_list_owner.py:8: [C0111(missing-docstring), Migration] Missing class docstring
-************* Module superlists.lists.tests.__init__
-lists/tests/__init__.py:1: [R0801(duplicate-code), ] Similar lines in 2 files
-==superlists.accounts.migrations.0001_initial:5
-==superlists.lists.migrations.0001_initial:6
-class Migration(migrations.Migration):
-
-    initial = True
-
-    dependencies = [
-    ]
-
-    operations = [
-        migrations.CreateModel(
-lists/tests/__init__.py:1: [R0801(duplicate-code), ] Similar lines in 2 files
-==superlists.accounts.migrations.0004_auto_20180809_1524:10
-==superlists.accounts.migrations.0005_auto_20180809_1552:10
-    ]
-
-    operations = [
-        migrations.AlterField(
-            model_name='token',
-            name='uid',
+lists/views.py:4: [C0103(invalid-name), ] Constant name "User" doesn't conform to UPPER_CASE naming style
+lists/views.py:6: [C0413(wrong-import-position), ] Import "from lists.models import Item, List" should be placed at the top of the module
+lists/views.py:7: [C0413(wrong-import-position), ] Import "from lists.forms import ItemForm, ExistingListItemForm, NewListForm" should be placed at the top of the module
+lists/views.py:10: [C0103(invalid-name), ] Constant name "form" doesn't conform to UPPER_CASE naming style
+lists/views.py:13: [C0111(missing-docstring), home_page] Missing function docstring
+lists/views.py:19: [W0621(redefined-outer-name), view_list] Redefining name 'form' from outer scope (line 10)
+lists/views.py:17: [C0111(missing-docstring), view_list] Missing function docstring
+lists/views.py:18: [E1101(no-member), view_list] Class 'List' has no 'objects' member
+lists/views.py:30: [W0621(redefined-outer-name), new_list] Redefining name 'form' from outer scope (line 10)
+lists/views.py:29: [C0111(missing-docstring), new_list] Missing function docstring
+lists/views.py:31: [R1705(no-else-return), new_list] Unnecessary "else" after "return"
+lists/views.py:38: [C0111(missing-docstring), my_lists] Missing function docstring
+lists/views.py:6: [W0611(unused-import), ] Unused Item imported from lists.models
 
 ------------------------------------------------------------------
-Your code has been rated at 0.87/10 (previous run: 0.87/10, +0.00)
+Your code has been rated at 0.74/10 (previous run: 0.72/10, +0.02)
 
