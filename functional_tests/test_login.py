@@ -114,7 +114,6 @@ class LoginTest(FunctionalTest):
         url_search = re.search(r"http://.+/.+$", body)
         if not url_search:
             self.fail(f"邮件内容中未发现登录链接:\n{body}")
-        self.fail(f"邮件内容中未发现登录链接:\n{body}")
         url = url_search.group(0)
         self.assertIn(self.live_server_url, url)
 
