@@ -58,7 +58,7 @@ def _get_latest_source(source_folder):
     # current_commit = local("git log -n 1 --format=%H", capture=True)
     # run(f"cd {source_folder} && git reset --hard {current_commit}")
     run("sudo locale-gen zh_CN.UTF-8")  # 解决ubuntu中文乱码问题
-    run(f" && cd {source_folder} && git reset --hard FETCH_HEAD && git pull")
+    run(f"cd {source_folder} && git reset --hard FETCH_HEAD && git pull")
 
 
 def _update_settings(source_folder, site_name):
