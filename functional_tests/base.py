@@ -2,6 +2,7 @@ from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from datetime import datetime
 import time
 import os
 
@@ -9,6 +10,9 @@ from .server_tools import reset_database
 
 
 MAX_WAIT = 10
+SCREEN_DUMP_LOCATION = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "screendumps"
+)
 
 
 def wait(fn):
@@ -35,8 +39,45 @@ class FunctionalTest(StaticLiveServerTestCase):
             reset_database(self.staging_server)
 
     def tearDown(self):
-        time.sleep(10)
+        if self._test_has_failed():
+            if not os.path.exists(SCREEN_DUMP_LOCATION):
+                os.makedirs(SCREEN_DUMP_LOCATION)
+            for ix, handle in enumerate(self.browser.window_handles):
+                self._windowid = ix
+                self.browser.switch_to_window(handle)
+                self.take_screenshot()  # 测试失败自动截图
+                self.dump_html()
         self.browser.quit()
+        super().tearDown()
+
+    def _test_has_failed(self):
+        ''' 判断测试是否失败 '''
+        return any(error for (method, error) in self._outcome.errors)
+
+    def take_screenshot(self):
+        ''' 截图函数 '''
+        filename = self._get_filename() + ".png"
+        print("屏幕已截图到", filename)
+        self.browser.get_screenshot_as_file(filename)
+
+    def dump_html(self):
+        ''' 输出html '''
+        filename = self._get_filename() + ".html"
+        print("页面HTML保存到", filename)
+        with open(filename, "w") as f:
+            f.write(self.browser.page_source)
+
+    def _get_filename(self):
+        ''' 生成唯一的文件名，包含测试方法和测试类的名字以及时间戳 '''
+        timestamp = datetime.now().isoformat().replace(":", ".")[:19]
+        return "{folder}/{classname}.{method}-window{windowid}-{timestamp}"\
+            .format(
+                folder=SCREEN_DUMP_LOCATION,
+                classname=self.__class__.__name__,
+                method=self._testMethodName,
+                windowid=self._windowid,
+                timestamp=timestamp
+            )
 
     def get_item_input_box(self):
         ''' 重构功能测试中需要定位id_new_item的输入框 '''
