@@ -10,6 +10,7 @@ def deploy():
     site_folder = f"/home/{env.user}/sites/{env.host}"
     source_folder = site_folder + "/source"
     _install_python_and_nginx()
+    _install_nodejs_npm_and_phantomjs()
     _create_directory_structure_if_necessary(site_folder)
     _get_latest_source(source_folder)
     _update_settings(source_folder, env.host)
@@ -29,6 +30,13 @@ def update():
     _update_static_files(source_folder)
     _update_database(source_folder)
     _update_systemd_when_reboot_enable(source_folder, env.host)
+
+
+def _install_nodejs_npm_and_phantomjs():
+    run("sudo apt-get install nodejs-legacy nodejs -y"
+        " && sudo apt-get update -y"
+        " && sudo apt-get install npm -y"
+        " && sudo apt-get install phantomjs -y")
 
 
 def _install_python_and_nginx():
