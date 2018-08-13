@@ -8,6 +8,10 @@ class List(models.Model):
         settings.AUTH_USER_MODEL, blank=True,
         null=True, on_delete=models.CASCADE
     )
+    shared_with = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name="shared_lists"
+    )
 
     @property
     def name(self):

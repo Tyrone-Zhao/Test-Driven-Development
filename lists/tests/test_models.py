@@ -38,6 +38,13 @@ class ItemModelTest(TestCase):
 
 class ListModelTest(TestCase):
 
+    def test_shared_with_response(self):
+        ''' 测试清单能否响应shared_with.add方法 '''
+        user = User.objects.create(email="tyrone-zhao@qq.com")
+        list_ = List.objects.create()
+        list_.shared_with.add(user.email)
+        self.assertIn(user, list_.shared_with.all())
+
     def test_get_absolute_url(self):
         ''' 测试Django的模型对象URL '''
         list_ = List.objects.create()

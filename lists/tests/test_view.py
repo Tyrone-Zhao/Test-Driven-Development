@@ -15,6 +15,30 @@ from lists.forms import (
 from lists.views import new_list
 
 
+class ShareListTest(TestCase):
+    ''' 测试分享列表的功能 '''
+
+    def test_post_redirects_to_lists_page(self):
+        ''' 测试发送重定向请求到列表页 '''
+        sharee = User.objects.create(email="tyrone-zhao@qq.com")
+        list_ = List.objects.create()
+        response = self.client.post(
+            f"/lists/{list_.id}/share",
+            data={"sharee": "tyrone-zhao@qq.com"}
+        )
+        self.assertRedirects(response, list_.get_absolute_url())
+
+    def test_sharing_a_list_via_post(self):
+        ''' 测试通过post请求分享了一个列表 '''
+        sharee = User.objects.create(email="tyrone-zhao@qq.com")
+        list_ = List.objects.create()
+        self.client.post(
+            f"/lists/{list_.id}/share",
+            {"sharee": "tyrone-zhao@qq.com"}
+        )
+        self.assertIn(sharee, list_.shared_with.all())
+
+
 class HomePageTest(TestCase):
     ''' 测试主页的显示 '''
 
