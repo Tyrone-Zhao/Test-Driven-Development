@@ -1,5 +1,8 @@
 from selenium import webdriver
+
 from .base import FunctionalTest
+from .list_page import ListPage
+from .my_list_page import MyListPage
 
 
 def quit_if_possible(browser):
@@ -25,14 +28,36 @@ class SharingTest(FunctionalTest):
 
         # 小明访问首页，新建一个清单
         self.browser = ming_browser
-        self.browser.get(self.live_server_url)
-        self.add_list_item("获取帮助")
+        list_page = ListPage(self).add_list_item("获取帮助")
 
         # 他看到"分享这个清单"选项
-        share_box = self.browser.find_element_by_css_selector(
-            "input[name='sharee']"
-        )
+        share_box = list_page.get_share_box()
         self.assertEqual(
             share_box.get_attribute("placeholder"),
             "tyrone-zhao@qq.com"
         )
+
+        # 他分享自己的清单后，页面更新了
+        # 提示已经分享给小花
+        list_page.share_list_with("tyrone-zhao@qq.com")
+
+        # 现在小花在他的浏览器中访问清单页面
+        self.browser = hua_browser
+        MyListPage(self).go_to_my_lists_page()
+
+        # 他看到了小明分享的清单
+        self.browser.find_element_by_link_text("获取帮助").click()
+
+        # 在清单页面，小花看到这个清单属于小明
+        self.wait_for(lambda: self.assertEqual(
+            list_page.get_list_owner(),
+            "200612453@qq.com"
+        ))
+
+        # 他在这个清单中添加一个待办事项
+        list_page.add_list_item("你好 小明!")
+
+        # 小明刷新页面后，看到小花添加的内容
+        self.browser = ming_browser
+        self.browser.refresh()
+        list_page.wait_for_row_in_list_table("你好 小明", 2)
