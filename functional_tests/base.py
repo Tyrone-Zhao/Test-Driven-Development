@@ -3,10 +3,12 @@ from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from datetime import datetime
+from django.conf import settings
 import time
 import os
 
-from .server_tools import reset_database
+from .server_tools import reset_database, create_session_on_server
+from .management.commands.create_session import create_pre_authenticated_session
 
 
 MAX_WAIT = 10
@@ -49,6 +51,22 @@ class FunctionalTest(StaticLiveServerTestCase):
                 self.dump_html()
         self.browser.quit()
         super().tearDown()
+
+    def create_pre_authenticated_session(self, email):
+        ''' 创建之前的认证会话 '''
+        if self.staging_server:
+            session_key = create_session_on_server(self.staging_server, email)
+        else:
+            session_key = create_pre_authenticated_session(email)
+
+        ## 为了设定cookie, 我们要先访问网站
+        # 而404页面是加载最快的
+        self.browser.get(self.live_server_url + "/404_no_such_url/")
+        self.browser.add_cookie(dict(
+            name=settings.SESSION_COOKIE_NAME,
+            value=session_key,
+            path="/",
+        ))
 
     def _test_has_failed(self):
         ''' 判断测试是否失败 '''
