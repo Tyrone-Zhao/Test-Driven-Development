@@ -28,6 +28,7 @@ class SharingTest(FunctionalTest):
 
         # 小明访问首页，新建一个清单
         self.browser = ming_browser
+        self.browser.get(self.live_server_url)
         list_page = ListPage(self).add_list_item("获取帮助")
 
         # 他看到"分享这个清单"选项
