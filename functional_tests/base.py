@@ -83,7 +83,7 @@ class FunctionalTest(StaticLiveServerTestCase):
         filename = self._get_filename() + ".html"
         print("页面HTML保存到", filename)
         with open(filename, "w") as f:
-            f.write(self.browser.page_source.decode("utf8"))
+            f.write(self.browser.page_source)
 
     def _get_filename(self):
         ''' 生成唯一的文件名，包含测试方法和测试类的名字以及时间戳 '''
