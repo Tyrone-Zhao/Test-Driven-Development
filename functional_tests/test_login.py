@@ -39,7 +39,11 @@ class LoginTest(FunctionalTest):
                     for l in lines:
                         if "Subject" in l and "Jenkins" not in l:
                             print(l)
-                            subject = base64.b64decode(l[19:]).decode()
+                            try:
+                                subject = base64.b64decode(l[19:]).decode()
+                            except:
+                                subject = base64.b64decode(
+                                    subject[11:-4]).decode()
                             if subject == SUBJECT:
                                 email_id = i
                                 new_lines.append(f"Subject: {subject}")
