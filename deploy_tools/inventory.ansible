@@ -1,0 +1,8 @@
+[live]
+116.85.48.20 ansible_become=yes ansible_ssh_user=dc2-user
+
+[staging]
+116.85.48.20 ansible_become=yes ansible_ssh_user=dc2-user
+
+[local]
+localhost ansible_ssh_user=root ansible_ssh_port=6666 ansible_host=127.0.0.1
