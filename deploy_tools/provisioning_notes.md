@@ -1,6 +1,9 @@
 配置新网站
 =========================
 
+## ansible
+ansible-playbook -i inventory.ansible provision.ansible.yaml --limit=staging --ask-become-pass
+
 ## 需要的包
 
 * nginx

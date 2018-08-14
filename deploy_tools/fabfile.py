@@ -12,7 +12,7 @@ def deploy():
     _install_python_and_nginx()
     _install_nodejs_npm_and_phantomjs()
     _create_directory_structure_if_necessary(site_folder)
-    _get_latest_source(source_folder)
+    _get_repository_new(source_folder)
     _update_settings(source_folder, env.host)
     _update_virtualenv(source_folder)
     _update_static_files(source_folder)
@@ -48,6 +48,11 @@ def _install_python_and_nginx():
 def _create_directory_structure_if_necessary(site_folder):
     for subfolder in ("database", "static", "virtualenv", "source"):
         run(f"mkdir -p {site_folder}/{subfolder}")
+
+
+def _get_repository_new(source_folder):
+    run(f"rm -rf {source_folder}/")
+    run(f"git clone {REPO_URL} {source_folder}")
 
 
 def _get_latest_source(source_folder):
