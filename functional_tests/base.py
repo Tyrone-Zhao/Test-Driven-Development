@@ -6,6 +6,7 @@ from datetime import datetime
 from django.conf import settings
 import time
 import os
+import codecs
 
 from .server_tools import reset_database, create_session_on_server
 from .management.commands.create_session import create_pre_authenticated_session
@@ -82,7 +83,7 @@ class FunctionalTest(StaticLiveServerTestCase):
         ''' 输出html '''
         filename = self._get_filename() + ".html"
         print("页面HTML保存到", filename)
-        with open(filename, "w") as f:
+        with codecs.open(filename, 'w', encoding='utf-8') as f:
             f.write(self.browser.page_source)
 
     def _get_filename(self):

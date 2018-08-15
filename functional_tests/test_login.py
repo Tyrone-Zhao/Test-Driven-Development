@@ -5,6 +5,10 @@ import os
 import time
 import poplib
 import base64
+from email.parser import Parser
+from email.header import decode_header
+from email.utils import parseaddr
+
 
 from .base import FunctionalTest
 
