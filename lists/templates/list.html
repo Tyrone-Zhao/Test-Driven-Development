@@ -7,7 +7,7 @@
 {% block table %}
     <table id="id_list_table" class="table">
         {% for item in list.item_set.all %}
-            <tr><td>{{ forloop.counter }}: {{ item.text }}</td></tr>
+            <tr><td> {{forloop.counter}}: {{item.text}} </td></tr>
         {% endfor %}
     </table>
 {% endblock %}
@@ -36,3 +36,12 @@
     </div>
 
 {% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var url = "{% url 'api_list' list.id %}";
+            window.Superlists.initialize(url);
+        });
+    </script>
+{% endblock scripts %}

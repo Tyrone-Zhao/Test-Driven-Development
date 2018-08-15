@@ -51,14 +51,16 @@
                 <div class="text-center">
                     <h1>{% block header_text %}{% endblock %}</h1>
                     {% block list_form %}
-                        <form method="POST" action="{% block form_action %}{% endblock %}">
+                        <form id="id_item_form" method="POST" action="{% block form_action %}{% endblock %}">
                             {{ form.text }}
                             {% csrf_token %}
-                            {% if form.errors %}
-                                <div class="form-group has-error">
-                                    <span class="help-block">{{ form.text.errors }}</span>
+                            <div class="form-group has-error">
+                                <div class="help-block">
+                                    {% if form.errors %}
+                                        {{ form.text.errors }}
+                                    {% endif %}
                                 </div>
-                            {% endif %}
+                            </div>
                         </form>
                     {% endblock %}
                 </div>
@@ -83,11 +85,13 @@
     <script src="/static/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="/static/tests/list.js"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            window.Superlists.initialize();
-        })
-    </script>
+    {% block scripts %}
+        <script type="text/javascript">
+            $(document).ready(function () {
+                window.Superlists.initialize();
+            });
+        </script>
+    {% endblock scripts %}
 
 </body>
 </html>
