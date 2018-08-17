@@ -1,12 +1,15 @@
+/*global window,$ */
+/*jslint browser: true, passfail: false, es5: true */
 window.Superlists = {};
 
+
 window.Superlists.updateItems = function (url) {
+    "use strict";
     $.get(url).done(function (response) {
-        var rows = "";
-        var i;
-        for (i=0; i<response.length; i += 1) {
-            var item = response[i];
-            rows += "\n<tr><td>" + (i+1) + ": " + item.text + "</td></tr>";
+        var rows = "", i, item;
+        for (i = 0; i < response.length; i += 1) {
+            item = response[i];
+            rows += "\n<tr><td>" + (i + 1) + ": " + item.text + "</td></tr>";
         }
         $("#id_list_table").html(rows);
     });
@@ -40,3 +43,4 @@ window.Superlists.initialize = function (url) {
         });
     }
 };
+
