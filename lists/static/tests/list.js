@@ -3,7 +3,8 @@ window.Superlists = {};
 window.Superlists.updateItems = function (url) {
     $.get(url).done(function (response) {
         var rows = "";
-        for (var i=0; i<response.length; i++) {
+        var i;
+        for (i=0; i<response.length; i += 1) {
             var item = response[i];
             rows += "\n<tr><td>" + (i+1) + ": " + item.text + "</td></tr>";
         }
