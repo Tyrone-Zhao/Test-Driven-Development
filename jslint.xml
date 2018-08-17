@@ -1,0 +1,154 @@
+
+./lists/static/tests/list.js
+ #1 'window' was used before it was defined.
+    window.Superlists = {}; // Line 1, Pos 1
+ #2 'window' was used before it was defined.
+    window.Superlists.updateItems = function (url) { // Line 3, Pos 1
+ #3 Missing 'use strict' statement.
+    $.get(url).done(function (response) { // Line 4, Pos 5
+ #4 Move 'var' declarations to the top of the function.
+    for (var i=0; i<response.length; i++) { // Line 6, Pos 14
+ #5 Stopping. (14% scanned).
+     // Line 6, Pos 14
+
+./lists/static/tests/qunit-2.6.1.css
+ #1 Unexpected '#'.
+    #qunit-tests, #qunit-header, #qunit-banner, #qunit-testrunner-toolbar, #qunit-filteredTest, #qunit-userAgent, #qunit-testresult { // Line 14, Pos 1
+ #2 Stopping. (3% scanned).
+     // Line 14, Pos 2
+
+./lists/static/tests/qunit-2.6.1.js
+ #1 Expected 'use strict' at column 5, not column 3.
+    'use strict'; // Line 12, Pos 3
+ #2 Expected 'global$1' at column 5, not column 3.
+    global$1 = global$1 && global$1.hasOwnProperty('default') ? global$1['default'] : global$1; // Line 14, Pos 3
+ #3 Expected 'var' at column 5, not column 3.
+    var window = global$1.window; // Line 16, Pos 3
+ #4 Expected 'var' at column 5, not column 3.
+    var self$1 = global$1.self; // Line 17, Pos 3
+ #5 Combine this with the previous 'var' statement.
+    var self$1 = global$1.self; // Line 17, Pos 7
+ #6 Expected 'var' at column 5, not column 3.
+    var console = global$1.console; // Line 18, Pos 3
+ #7 Combine this with the previous 'var' statement.
+    var console = global$1.console; // Line 18, Pos 7
+ #8 Expected 'var' at column 5, not column 3.
+    var setTimeout = global$1.setTimeout; // Line 19, Pos 3
+ #9 Combine this with the previous 'var' statement.
+    var setTimeout = global$1.setTimeout; // Line 19, Pos 7
+#10 Expected 'var' at column 5, not column 3.
+    var clearTimeout = global$1.clearTimeout; // Line 20, Pos 3
+#11 Combine this with the previous 'var' statement.
+    var clearTimeout = global$1.clearTimeout; // Line 20, Pos 7
+#12 Expected 'var' at column 5, not column 3.
+    var document = window && window.document; // Line 22, Pos 3
+#13 Combine this with the previous 'var' statement.
+    var document = window && window.document; // Line 22, Pos 7
+#14 Expected 'var' at column 5, not column 3.
+    var navigator = window && window.navigator; // Line 23, Pos 3
+#15 Combine this with the previous 'var' statement.
+    var navigator = window && window.navigator; // Line 23, Pos 7
+#16 Expected 'var' at column 5, not column 3.
+    var localSessionStorage = function () { // Line 25, Pos 3
+#17 Combine this with the previous 'var' statement.
+    var localSessionStorage = function () { // Line 25, Pos 7
+#18 Expected 'var' at column 13, not column 5.
+    var x = "qunit-test-string"; // Line 26, Pos 5
+#19 Expected 'try' at column 13, not column 5.
+    try { // Line 27, Pos 5
+#20 Expected 'global$1' at column 17, not column 9.
+    global$1.sessionStorage.setItem(x, x); // Line 28, Pos 9
+#21 Expected 'global$1' at column 17, not column 9.
+    global$1.sessionStorage.removeItem(x); // Line 29, Pos 9
+#22 Expected 'return' at column 17, not column 9.
+    return global$1.sessionStorage; // Line 30, Pos 9
+#23 Expected '}' at column 13, not column 5.
+    } catch (e) { // Line 31, Pos 5
+#24 Expected 'return' at column 17, not column 9.
+    return undefined; // Line 32, Pos 9
+#25 Expected '}' at column 13, not column 5.
+    } // Line 33, Pos 5
+#26 Expected '}' at column 9, not column 3.
+    }(); // Line 34, Pos 3
+#27 Wrap an immediate function invocation in parentheses to assist the reader in understanding that the expression is the result of a function, and not the function itself.
+    }(); // Line 34, Pos 5
+#28 Expected 'var' at column 5, not column 3.
+    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { // Line 36, Pos 3
+#29 Unexpected dangling '_' in '_typeof'.
+    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { // Line 36, Pos 7
+#30 Combine this with the previous 'var' statement.
+    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { // Line 36, Pos 7
+#31 'Symbol' was used before it was defined.
+    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { // Line 36, Pos 24
+#32 'Symbol' was used before it was defined.
+    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { // Line 36, Pos 56
+#33 Expected 'return' at column 13, not column 5.
+    return typeof obj; // Line 37, Pos 5
+#34 Expected '}' at column 9, not column 3.
+    } : function (obj) { // Line 38, Pos 3
+#35 Expected 'return' at column 13, not column 5.
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; // Line 39, Pos 5
+#36 'Symbol' was used before it was defined.
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; // Line 39, Pos 26
+#37 'Symbol' was used before it was defined.
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; // Line 39, Pos 71
+#38 'Symbol' was used before it was defined.
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; // Line 39, Pos 89
+#39 Expected '}' at column 9, not column 3.
+    }; // Line 40, Pos 3
+#40 Expected 'var' at column 5, not column 3.
+    var classCallCheck = function (instance, Constructor) { // Line 52, Pos 3
+#41 Combine this with the previous 'var' statement.
+    var classCallCheck = function (instance, Constructor) { // Line 52, Pos 7
+#42 Expected 'if' at column 13, not column 5.
+    if (!(instance instanceof Constructor)) { // Line 53, Pos 5
+#43 Expected 'throw' at column 17, not column 7.
+    throw new TypeError("Cannot call a class as a function"); // Line 54, Pos 7
+#44 Expected '}' at column 13, not column 5.
+    } // Line 55, Pos 5
+#45 Expected '}' at column 9, not column 3.
+    }; // Line 56, Pos 3
+#46 Expected 'var' at column 5, not column 3.
+    var createClass = function () { // Line 58, Pos 3
+#47 Combine this with the previous 'var' statement.
+    var createClass = function () { // Line 58, Pos 7
+#48 Expected 'function' at column 13, not column 5.
+    function defineProperties(target, props) { // Line 59, Pos 5
+#49 Expected 'for' at column 17, not column 7.
+    for (var i = 0; i < props.length; i++) { // Line 60, Pos 7
+#50 Move 'var' declarations to the top of the function.
+    for (var i = 0; i < props.length; i++) { // Line 60, Pos 12
+#51 Too many errors. (1% scanned).
+     // Line 60, Pos 12
+
+./lists/static/tests/runner.js
+ #1 'exit' was used before it was defined.
+    exit(1); // Line 12, Pos 9
+ #2 Combine this with the previous 'var' statement.
+    var pageProperties = JSON.parse(args[3]); // Line 25, Pos 17
+ #3 Move 'var' declarations to the top of the function.
+    for (var prop in pageProperties) { // Line 28, Pos 22
+ #4 Stopping. (16% scanned).
+     // Line 28, Pos 22
+
+./lists/static/tests/test.html
+ #1 Expected '(end)' and instead saw '<!'.
+    <!DOCTYPE html> // Line 1, Pos 1
+
+./lists/static/tests/test.js
+ #1 'QUnit' was used before it was defined.
+    QUnit.test( "errors should be hidden on keypress", function (assert) { // Line 1, Pos 1
+ #2 Unexpected space between '(' and 'errors should be hidden on keypress'.
+    QUnit.test( "errors should be hidden on keypress", function (assert) { // Line 1, Pos 13
+ #3 Missing 'use strict' statement.
+    window.Superlists.initialize(); // Line 2, Pos 5
+ #4 '$' was used before it was defined.
+    $("input[name='text']").trigger("keypress"); // Line 3, Pos 5
+ #5 '$' was used before it was defined.
+    assert.equal($(".has-error").is(":visible"), false); // Line 4, Pos 18
+ #6 'QUnit' was used before it was defined.
+    QUnit.test("errors aren't hidden if there is no keypress", function (assert) { // Line 7, Pos 1
+ #7 Missing 'use strict' statement.
+    window.Superlists.initialize(); // Line 8, Pos 5
+ #8 '$' was used before it was defined.
+    assert.equal($(".has-error").is(":visible"), true); // Line 9, Pos 18
